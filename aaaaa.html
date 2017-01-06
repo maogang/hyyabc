@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<style type="text/css">
+			:target{
+				color: yellow;
+			}
+			ul li{
+				margin-right: 20px;
+				float: left;
+				list-style: none;
+			}
+			#li1{
+				color: yellow;
+			}
+		
+		</style>
+	</head>
+	<body>
+		<a href="#p1">点我跳到p1</a>
+		<a href="#p2">点我跳到p2</a><br />
+		<p id="p1">我是p1</p>
+		<p id="p2">我是p2</p>
+		<input type="range" max="6" min="1" value="2"/><span>2</span><br />
+		<meter max="6" min="1" value="2"></meter><br />
+
+		<ul>
+			<li id="li1">li1</li>
+			<li>li2</li>
+			<li>li3</li>
+			<li>li4</li>
+			<li>li5</li>
+		</ul>				
+		<progress max="5" min="1" value="1"></progress>
+
+	</body>
+	
+<script type="text/javascript">
+	var theRange = document.querySelector("[type=range]");
+	var theSpan = document.querySelector("span");
+	var theMeter = document.querySelector("meter");
+	var theProgress = document.querySelector("progress");
+	var ul = document.querySelector("ul");
+	var allLi = document.querySelectorAll("li"); 
+
+	
+	theRange.addEventListener("mousemove",function(){
+		theSpan.innerHTML = this.value;
+		theMeter.value = this.value;
+	});
+	
+//	事件代理
+	ul.addEventListener("click",function(){
+//		如果是冒泡事件
+		if(event.eventPhase == 3){
+//			发生点击时先移除第一个li的id,让它不享受颜色
+			allLi[0].removeAttribute("id");
+			for (var i=0; i<allLi.length; i++) {
+				if(allLi[i] == event.target){
+//					将进度条和li联动
+					allLi[i].style.color = "yellow";
+					theProgress.value = i + 1;
+				}else{
+					allLi[i].style.color = "";
+				}
+			}	
+		}
+	});
+	
+</script>
+</html>
